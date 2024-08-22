@@ -12,9 +12,9 @@ import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
 import { useAlertStore } from "../../../store/alert-store";
 import { useCustomToolStore } from "../../../store/custom-tool-store";
 import { useSessionStore } from "../../../store/session-store";
-import { useSocketCustomToolStore } from "../../../store/socket-custom-tool";
 import { OutputForDocModal } from "../output-for-doc-modal/OutputForDocModal";
 import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import { useSocketLogsStore } from "../../../store/socket-logs-store";
 import useTokenUsage from "../../../hooks/useTokenUsage";
 import { useTokenUsageStore } from "../../../store/token-usage-store";
 import { PromptCardItems } from "./PromptCardItems";
@@ -79,7 +79,7 @@ function PromptCard({
     isSimplePromptStudio,
     isPublicSource,
   } = useCustomToolStore();
-  const { messages } = useSocketCustomToolStore();
+  const { logs } = useSocketLogsStore();
   const { sessionDetails } = useSessionStore();
   const { setAlertDetails } = useAlertStore();
   const axiosPrivate = useAxiosPrivate();
@@ -99,7 +99,7 @@ function PromptCard({
 
   useEffect(() => {
     // Find the latest message that matches the criteria
-    const msg = [...messages]
+    const msg = [...logs]
       .reverse()
       .find(
         (item) =>
@@ -118,7 +118,7 @@ function PromptCard({
       message: msg?.message || "",
       level: msg?.level || "INFO",
     });
-  }, [messages]);
+  }, [logs]);
 
   useEffect(() => {
     setSelectedLlmProfileId(

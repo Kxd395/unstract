@@ -26,13 +26,13 @@ import { useExceptionHandler } from "../../../hooks/useExceptionHandler";
 import { useAlertStore } from "../../../store/alert-store";
 import { useCustomToolStore } from "../../../store/custom-tool-store";
 import { useSessionStore } from "../../../store/session-store";
-import { useSocketCustomToolStore } from "../../../store/socket-custom-tool";
 import { ConfirmModal } from "../../widgets/confirm-modal/ConfirmModal";
 import { EmptyState } from "../../widgets/empty-state/EmptyState";
 import SpaceWrapper from "../../widgets/space-wrapper/SpaceWrapper";
 import { SpinnerLoader } from "../../widgets/spinner-loader/SpinnerLoader";
 import "./ManageDocsModal.css";
 import usePostHogEvents from "../../../hooks/usePostHogEvents";
+import { useSocketLogsStore } from "../../../store/socket-logs-store";
 
 let SummarizeStatusTitle = null;
 try {
@@ -86,7 +86,7 @@ function ManageDocsModal({
     isSinglePassExtractLoading,
     isPublicSource,
   } = useCustomToolStore();
-  const { messages } = useSocketCustomToolStore();
+  const { logs } = useSocketLogsStore();
   const axiosPrivate = useAxiosPrivate();
   const handleException = useExceptionHandler();
   const { setPostHogCustomEvent } = usePostHogEvents();
@@ -163,7 +163,7 @@ function ManageDocsModal({
 
   useEffect(() => {
     // Reverse the array to have the latest logs at the beginning
-    let newMessages = [...messages].reverse();
+    let newMessages = [...logs].reverse();
 
     // If there are no new messages, return early
     if (newMessages?.length === 0) {
@@ -212,7 +212,7 @@ function ManageDocsModal({
 
     // Update the timestamp of the last received message
     setLastMessagesUpdate(newMessages[0]?.timestamp);
-  }, [messages]);
+  }, [logs]);
 
   const handleLoading = (indexType, value) => {
     if (indexType === indexTypes.raw) {
@@ -451,7 +451,7 @@ function ManageDocsModal({
     rawIndexStatus,
     summarizeIndexStatus,
     indexDocs,
-    messages,
+    logs,
     isSinglePassExtractLoading,
   ]);
 

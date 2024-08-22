@@ -424,6 +424,24 @@ const generateUUID = () => {
   const uuid = uuidv4();
   return uuid;
 };
+const convertTimestampToHHMMSS = (timestamp) => {
+  // Convert the timestamp to milliseconds
+  const date = new Date(timestamp * 1000);
+
+  // Extract hours, minutes, and seconds
+  const [hours, minutes, seconds] = [
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+  ].map((unit) => unit.toString().padStart(2, "0"));
+  // Return the formatted time string
+  return `${hours}:${minutes}:${seconds}`;
+};
+
+const isSubPage = (type, path) => {
+  const regex = new RegExp(`^/[^/]+/${type}/.+`);
+  return regex.test(path);
+};
 
 function getLLMModelNamesForProfiles(profiles, adapters) {
   // Create a mapping of adapter_ids to model names
@@ -542,6 +560,8 @@ export {
   isNonNegativeNumber,
   defaultTokenUsage,
   generateUUID,
+  convertTimestampToHHMMSS,
+  isSubPage,
   getLLMModelNamesForProfiles,
   getFormattedTotalCost,
   pollForCompletion,
