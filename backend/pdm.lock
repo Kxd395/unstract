@@ -2928,6 +2928,20 @@ files = [
 ]
 
 [[package]]
+name = "oracledb"
+version = "2.4.0"
+requires_python = ">=3.8"
+summary = "Python interface to Oracle Database"
+groups = ["default", "dev"]
+dependencies = [
+    "cryptography>=3.2.1",
+]
+files = [
+    {file = "oracledb-2.4.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ad1f36c21ef077b5a5ae222914778c51ced565a58055c38704ee07ac1deef114"},
+    {file = "oracledb-2.4.0.tar.gz", hash = "sha256:bdd61a9d5077448b5f1c58af6a14accc287bf8032846c351a3cdde5cf64fe95b"},
+]
+
+[[package]]
 name = "orjson"
 version = "3.10.7"
 requires_python = ">=3.8"
@@ -4803,6 +4817,7 @@ dependencies = [
     "google-cloud-secret-manager==2.16.1",
     "google-cloud-storage==2.9.0",
     "oauth2client==4.1.3",
+    "oracledb==2.4.0",
     "psycopg2-binary==2.9.9",
     "pymssql==2.2.8",
     "s3fs[boto3]==2024.6.0",
